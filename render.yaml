@@ -1,0 +1,18 @@
+databases:
+  - name: CAR-BOOKING-APP
+    databaseName: car_booking_app
+    user: car_booking_app_user
+
+services:
+  - type: web
+    name: CAR-BOOKING-APP
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: car_booking_app
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
